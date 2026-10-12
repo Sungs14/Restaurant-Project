@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
 const Restaurant = require("./models/Restaurant");
+const Rating = require("./models/Rating");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -94,6 +95,7 @@ app.post(
   "/api/restaurants",
   wrap(async (req, res) => {
     const doc = await Restaurant.create({ ...pick(req.body), id: await newId(req.body && req.body.name) });
+    await Rating.seedRandom([doc.id]); // default random ratings, editable by visitors
     res.status(201).json(doc);
   })
 );
@@ -115,7 +117,76 @@ app.delete(
   wrap(async (req, res) => {
     const doc = await Restaurant.findOneAndDelete({ id: String(req.params.id) });
     if (!doc) return res.status(404).json({ error: "Not found" });
+    await Rating.deleteMany({ restaurantId: doc.id });
     res.status(204).end();
+  })
+);
+
+/* ---------- ratings ---------- */
+
+// Average + count per restaurant, using the MongoDB aggregation pipeline.
+const avgStage = [{ $group: { _id: "$restaurantId", avg: { $avg: "$stars" }, count: { $sum: 1 } } }];
+const validVoter = (v) => /^[\w-]{8,64}$/.test(v);
+
+// Gives restaurants that have no ratings yet some random default ones.
+async function seedMissingRatings() {
+  const [restaurants, rated] = await Promise.all([Restaurant.find({}, "id").lean(), Rating.distinct("restaurantId")]);
+  const have = new Set(rated);
+  const missing = restaurants.map((r) => r.id).filter((id) => id && !have.has(id));
+  if (missing.length) console.log(`Added ${await Rating.seedRandom(missing)} default ratings for ${missing.length} restaurants`);
+}
+
+// GET /api/ratings/top  -> highest rated restaurants (default top 5)
+app.get(
+  "/api/ratings/top",
+  wrap(async (req, res) => {
+    const limit = Math.min(Number(req.query.limit) || 5, 20);
+    const top = await Rating.aggregate([
+      ...avgStage,
+      { $sort: { avg: -1, count: -1, _id: 1 } },
+      { $limit: limit },
+      { $project: { _id: 0, id: "$_id", avg: { $round: ["$avg", 1] }, count: 1 } },
+    ]);
+    res.json(top);
+  })
+);
+
+// GET /api/ratings/summary  -> { "restaurant-id": { avg, count }, ... } for the cards
+app.get(
+  "/api/ratings/summary",
+  wrap(async (req, res) => {
+    const rows = await Rating.aggregate(avgStage);
+    res.json(Object.fromEntries(rows.map((r) => [r._id, { avg: Math.round(r.avg * 10) / 10, count: r.count }])));
+  })
+);
+
+// GET /api/ratings/mine?voter=...  -> { "restaurant-id": stars } this browser's own ratings
+app.get(
+  "/api/ratings/mine",
+  wrap(async (req, res) => {
+    const voter = String(req.query.voter || "");
+    if (!validVoter(voter)) return res.json({});
+    const rows = await Rating.find({ voter }).lean();
+    res.json(Object.fromEntries(rows.map((r) => [r.restaurantId, r.stars])));
+  })
+);
+
+// POST /api/restaurants/:id/rate   body: { "stars": 1-5, "voter": "<browser id>" }
+// Sending it again with the same voter changes that voter's rating.
+app.post(
+  "/api/restaurants/:id/rate",
+  wrap(async (req, res) => {
+    const id = String(req.params.id);
+    const stars = Number(req.body && req.body.stars);
+    const voter = String((req.body && req.body.voter) || "");
+    if (!Number.isInteger(stars) || stars < 1 || stars > 5)
+      return res.status(400).json({ error: "stars must be a whole number from 1 to 5" });
+    if (!validVoter(voter)) return res.status(400).json({ error: "Missing or invalid voter id" });
+    if (!id || id.length > 100) return res.status(400).json({ error: "Invalid restaurant id" });
+
+    await Rating.findOneAndUpdate({ restaurantId: id, voter }, { $set: { stars } }, { upsert: true });
+    const [row] = await Rating.aggregate([{ $match: { restaurantId: id } }, ...avgStage]);
+    res.status(201).json({ id, stars, avg: Math.round(row.avg * 10) / 10, count: row.count });
   })
 );
 
@@ -125,8 +196,15 @@ app.use("/api", (req, res) => res.status(404).json({ error: "Unknown API route" 
 /* ---------- start ---------- */
 mongoose
   .connect(MONGODB_URI)
-  .then(() => {
+  .then(async () => {
     console.log("Connected to MongoDB");
+    try {
+      await Rating.deleteMany({ voter: { $exists: false } }); // ratings from the earlier version
+      await Rating.createIndexes();
+      await seedMissingRatings();
+    } catch (err) {
+      console.warn("Ratings setup problem:", err.message);
+    }
     app.listen(PORT, () => console.log(`Mangan Tamu running at http://localhost:${PORT}`));
   })
   .catch((err) => {

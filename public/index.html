@@ -83,6 +83,7 @@
                 <option value="price-asc">Price, low to high</option>
                 <option value="price-desc">Price, high to low</option>
                 <option value="heat">Spiciest first</option>
+                <option value="rating">Highest rated</option>
               </select>
             </label>
 
@@ -115,7 +116,18 @@
             <p class="filters__label" id="heatLabel">Heat</p>
             <div class="chips" role="group" aria-labelledby="heatLabel" id="heatChips"></div>
           </div>
+
+          <div class="filters__group">
+            <p class="filters__label" id="ratingLabel">Rating</p>
+            <div class="chips" role="group" aria-labelledby="ratingLabel" id="ratingChips"></div>
+          </div>
         </div>
+      </section>
+
+      <!-- TOP RATED -->
+      <section class="toprated wrap" aria-labelledby="topTitle">
+        <h2 id="topTitle">Top rated</h2>
+        <ol class="toprated__list" id="topList"></ol>
       </section>
 
       <!-- RESULTS -->

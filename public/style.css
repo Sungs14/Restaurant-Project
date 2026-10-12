@@ -1134,3 +1134,139 @@ button {
 .restform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 .restform__error { min-height: 1.2rem; color: var(--sili); font-weight: 600; }
 .btn--danger { background: transparent; color: var(--sili); border-color: var(--sili); }
+
+
+/* ---------- ratings ---------- */
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--display);
+  font-weight: 650;
+}
+.rating svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: var(--turmeric);
+}
+.rating__n {
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.rating--none {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.card__rate {
+  font-size: 0.95rem;
+}
+
+/* top rated list */
+.toprated {
+  padding-top: 2.5rem;
+}
+.toprated h2 {
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  font-weight: 750;
+  font-stretch: 85%;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+}
+.toprated__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.8rem;
+}
+.toprated__list button {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--leaf-radius);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.toprated__list button:hover {
+  border-color: var(--leaf-700);
+}
+.toprated__list button:focus-visible {
+  outline: 3px solid var(--turmeric);
+  outline-offset: 2px;
+}
+.top__rank {
+  font-family: var(--display);
+  font-weight: 750;
+  font-size: 1.4rem;
+  color: var(--leaf-700);
+  min-width: 1.2rem;
+}
+.top__name {
+  flex: 1;
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.top__name small {
+  display: block;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.top__empty {
+  color: var(--ink-soft);
+}
+
+/* rate this place (details dialog) */
+.rate__stars {
+  display: flex;
+  gap: 0.2rem;
+}
+.rate__stars button {
+  all: unset;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+}
+.rate__stars button:focus-visible {
+  outline: 3px solid var(--turmeric);
+}
+.rate__stars svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  fill: rgba(27, 26, 23, 0.16);
+  transition: fill 0.1s ease;
+}
+/* hovering a star lights it and every star before it */
+.rate__stars:hover svg,
+.rate__stars button:focus-visible svg {
+  fill: var(--turmeric);
+}
+.rate__stars button:hover ~ button svg {
+  fill: rgba(27, 26, 23, 0.16);
+}
+.rate__done {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* editable rating: your current stars stay lit */
+.rate__stars svg.on {
+  fill: var(--turmeric);
+}
+.rate__note {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}

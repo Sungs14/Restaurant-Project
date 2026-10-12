@@ -1,6 +1,6 @@
 /* Mangan Tamu: Kapampangan restaurant explorer
    Sections: data, state, helpers, lantern, dish explorer, filters,
-   cards, dialog, favourites, init. */
+   cards, ratings, dialog, favourites, init. */
 
 /* ---------------- static content ---------------- */
 
@@ -18,6 +18,13 @@ const HEAT_LEVELS = [
   { value: "1", label: "Mild" },
   { value: "2", label: "Spicy" },
   { value: "3", label: "Fiery" },
+];
+
+const RATING_FILTERS = [
+  { value: "any", label: "Any rating" },
+  { value: "4.5", label: "4.5 and up" },
+  { value: "4", label: "4 and up" },
+  { value: "3", label: "3 and up" },
 ];
 
 const DISHES = [
@@ -83,6 +90,10 @@ const state = {
   savedOnly: false,
   saved: new Set(),
   group: "",
+  ratings: {}, // { restaurantId: { avg, count } } from /api/ratings/summary
+  mine: {}, // this browser's own ratings: { restaurantId: stars }
+  voter: "", // anonymous id: one editable rating per place per browser
+  minRating: "any",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -93,6 +104,7 @@ const els = {
   townChips: $("townChips"),
   catChips: $("catChips"),
   heatChips: $("heatChips"),
+  ratingChips: $("ratingChips"),
   search: $("search"),
   sort: $("sort"),
   savedToggle: $("savedToggle"),
@@ -114,6 +126,7 @@ function esc(value) {
 const SVG = {
   chili: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.500 3.500c1.200-.4 2.300.6 2 1.800-.9 5.200-4.200 12.300-12 15.400-2 .8-3.600-1.200-2.400-2.800 3.500-4.800 6.200-8.700 7.300-13.100.2-.9.800-1.400 1.500-1.300l2 .5.100-.5Z"/></svg>`,
   pin: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>`,
+  star: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.800 2.900 5.900 6.500.9-4.700 4.600 1.100 6.500L12 17.600l-5.800 3.100 1.100-6.500L2.600 9.600l6.500-.9L12 2.800Z"/></svg>`,
   heart: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.500s-8-4.800-8-10.800A4.600 4.600 0 0 1 12 6.700a4.600 4.600 0 0 1 8 3c0 6-8 10.800-8 10.800Z"/></svg>`,
 };
 
@@ -133,6 +146,12 @@ function priceTag(level) {
     out += `<span class="${i <= level ? "on" : "off"}">₱</span>`;
   }
   return out + "</span>";
+}
+
+function ratingLine(id) {
+  const s = state.ratings[id];
+  if (!s) return `<span class="rating rating--none">No ratings yet</span>`;
+  return `<span class="rating" role="img" aria-label="Rated ${s.avg} out of 5 from ${s.count} ${s.count === 1 ? "rating" : "ratings"}">${SVG.star}<b>${s.avg.toFixed(1)}</b><span class="rating__n">(${s.count})</span></span>`;
 }
 
 const toMinutes = (hhmm) => {
@@ -301,6 +320,10 @@ function buildChips() {
   els.heatChips.innerHTML = HEAT_LEVELS.map((h) =>
     chip(h.label, state.heat === h.value, `data-heat="${h.value}"`)
   ).join("");
+
+  els.ratingChips.innerHTML = RATING_FILTERS.map((f) =>
+    chip(f.label, state.minRating === f.value, `data-rating="${f.value}"`)
+  ).join("");
 }
 
 function setupFilterEvents() {
@@ -326,6 +349,14 @@ function setupFilterEvents() {
     render();
   });
 
+  els.ratingChips.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-rating]");
+    if (!b) return;
+    state.minRating = b.dataset.rating;
+    buildChips();
+    render();
+  });
+
   let debounce;
   els.search.addEventListener("input", () => {
     clearTimeout(debounce);
@@ -347,17 +378,20 @@ function setupFilterEvents() {
 }
 
 function resetFilters(redraw = true) {
-  Object.assign(state, { town: "", category: "", heat: "any", q: "", savedOnly: false });
+  Object.assign(state, { town: "", category: "", heat: "any", minRating: "any", q: "", savedOnly: false });
   els.search.value = "";
   buildChips();
   if (redraw) render();
 }
+
+const avgOf = (id) => (state.ratings[id] ? state.ratings[id].avg : 0);
 
 function getVisible() {
   let list = state.all.filter((r) => {
     if (state.town && r.town !== state.town) return false;
     if (state.category && r.category !== state.category) return false;
     if (state.heat !== "any" && r.heat !== Number(state.heat)) return false;
+    if (state.minRating !== "any" && avgOf(r.id) < Number(state.minRating)) return false;
     if (state.savedOnly && !state.saved.has(r.id)) return false;
     if (state.q && !matchesText(r, state.q)) return false;
     return true;
@@ -367,6 +401,7 @@ function getVisible() {
     "price-asc": (a, b) => a.price - b.price || a.name.localeCompare(b.name),
     "price-desc": (a, b) => b.price - a.price || a.name.localeCompare(b.name),
     heat: (a, b) => b.heat - a.heat || a.name.localeCompare(b.name),
+    rating: (a, b) => avgOf(b.id) - avgOf(a.id) || a.name.localeCompare(b.name),
   };
   return list.sort(sorters[state.sort]);
 }
@@ -388,6 +423,7 @@ function cardHTML(r) {
         ${priceTag(r.price)}
         <span class="status ${status.open ? "is-open" : ""}">${esc(status.text)}</span>
       </div>
+      <div class="card__rate">${ratingLine(r.id)}</div>
     </article>`;
 }
 
@@ -489,6 +525,7 @@ function openSheet(id) {
         <div><dt>Heat</dt><dd>${heatMeter(r.heat)}</dd></div>
         <div><dt>Price</dt><dd>${priceTag(r.price)}</dd></div>
         <div><dt>Hours</dt><dd>${formatTime(r.open)} to ${formatTime(r.close)}</dd></div>
+        <div><dt>Rating</dt><dd>${ratingLine(r.id)}</dd></div>
         <div><dt>Right now</dt><dd><span class="status ${status.open ? "is-open" : ""}">${esc(status.text)}</span></dd></div>
       </dl>
       <div>
@@ -496,6 +533,10 @@ function openSheet(id) {
         <ul class="menu">
           ${r.dishes.map((d) => `<li><strong>${esc(d.name)}</strong><span>${esc(d.note)}</span></li>`).join("")}
         </ul>
+      </div>
+      <div class="rate">
+        <h3>Rate this place</h3>
+        ${rateStars(r.id)}
       </div>
       <div class="sheet__actions">
         <button class="btn btn--leaf btn--save" type="button" data-save="${r.id}" aria-pressed="${saved}">${saved ? "Saved" : "Save this place"}</button>
@@ -510,6 +551,8 @@ function openSheet(id) {
 }
 
 els.sheetBody.addEventListener("click", (e) => {
+  const star = e.target.closest("[data-rate]");
+  if (star) return submitRating(star.closest("[data-rate-for]").dataset.rateFor, Number(star.dataset.rate));
   const save = e.target.closest("[data-save]");
   if (save) return toggleSaved(save.dataset.save);
   const edit = e.target.closest("[data-edit]");
@@ -537,6 +580,87 @@ els.sheet.addEventListener("click", (e) => {
 });
 
 
+/* ---------------- ratings ---------------- */
+
+// Each browser gets an anonymous id, so its rating for a place can be changed later.
+function getVoter() {
+  try {
+    let v = localStorage.getItem("mt-voter");
+    if (!v) {
+      v = crypto.randomUUID ? crypto.randomUUID() : "guest-" + Date.now() + Math.random().toString(16).slice(2);
+      localStorage.setItem("mt-voter", v);
+    }
+    return v;
+  } catch (e) {
+    return "guest-" + Math.random().toString(16).slice(2, 12);
+  }
+}
+
+function rateStars(id) {
+  const mine = state.mine[id] || 0;
+  let out = `<div class="rate__stars" role="group" aria-label="Rate from 1 to 5 stars" data-rate-for="${id}">`;
+  for (let i = 1; i <= 5; i++) {
+    const star = SVG.star.replace("<svg", `<svg class="${i <= mine ? "on" : ""}"`);
+    out += `<button type="button" data-rate="${i}" aria-pressed="${i === mine}" aria-label="${i} ${i === 1 ? "star" : "stars"}">${star}</button>`;
+  }
+  out += `</div><p class="rate__note">${mine ? `Your rating: ${mine} out of 5. Tap a star to change it.` : "Tap a star to rate."}</p>`;
+  return out;
+}
+
+async function loadRatings() {
+  try {
+    const [summary, top, mine] = await Promise.all([
+      request("GET", "/api/ratings/summary"),
+      request("GET", "/api/ratings/top?limit=10"),
+      request("GET", `/api/ratings/mine?voter=${encodeURIComponent(state.voter)}`),
+    ]);
+    state.ratings = summary;
+    state.mine = mine;
+    renderTop(top);
+  } catch (e) {
+    renderTop([]); // ratings are optional: the page still works without them
+  }
+}
+
+function renderTop(top) {
+  const rows = top
+    .map((t) => ({ ...t, r: state.all.find((x) => x.id === t.id) }))
+    .filter((t) => t.r)
+    .slice(0, 5);
+  $("topList").innerHTML = rows.length
+    ? rows
+        .map(
+          (t, i) => `
+      <li>
+        <button type="button" data-open-top="${esc(t.id)}">
+          <span class="top__rank">${i + 1}</span>
+          <span class="top__name">${esc(t.r.name)}<small>${esc(t.r.town)}</small></span>
+          <span class="rating">${SVG.star}<b>${t.avg.toFixed(1)}</b><span class="rating__n">(${t.count})</span></span>
+        </button>
+      </li>`
+        )
+        .join("")
+    : `<li class="top__empty">No ratings yet. Open a restaurant and give it some stars.</li>`;
+}
+
+async function submitRating(id, stars) {
+  const changing = Boolean(state.mine[id]);
+  try {
+    await request("POST", `/api/restaurants/${encodeURIComponent(id)}/rate`, { stars, voter: state.voter });
+    await loadRatings();
+    render();
+    openSheet(id);
+    toast(changing ? "Rating updated" : "Thanks for rating!");
+  } catch (err) {
+    toast(err.message);
+  }
+}
+
+$("topList").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-open-top]");
+  if (b) openSheet(b.dataset.openTop);
+});
+
 /* ---------------- add / edit / delete ---------------- */
 
 async function request(method, url, body) {
@@ -555,6 +679,7 @@ function refreshAfterChange() {
   if (state.category && !state.all.some((r) => r.category === state.category)) state.category = "";
   buildChips();
   render();
+  loadRatings().then(render); // new restaurants get default ratings; deleted ones lose theirs
 }
 
 let editingId = null;
@@ -662,6 +787,7 @@ async function init() {
   $("lightsBtn").addEventListener("click", cycleLights);
 
   loadSaved();
+  state.voter = getVoter();
   setupFilterEvents();
   setupFormEvents();
 
@@ -678,6 +804,7 @@ async function init() {
     return;
   }
 
+  await loadRatings();
   buildChips();
   buildDishes();
   render();
