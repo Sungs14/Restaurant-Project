@@ -1,0 +1,241 @@
+[
+  {
+    "id": "plaka-sisig-haus",
+    "name": "Plaka Sisig Haus",
+    "town": "Angeles City",
+    "category": "grill",
+    "signature": "Sizzling pork sisig on a hot plate",
+    "blurb": "A late-night favorite near Balibago where the plates arrive spitting and the calamansi is squeezed at the table. Order it with garlic rice and a cold drink.",
+    "heat": 2,
+    "price": 1,
+    "open": "11:00",
+    "close": "02:00",
+    "dishes": [
+      { "name": "Pork sisig", "note": "Chopped, grilled and seasoned with onion, chili and calamansi" },
+      { "name": "Sisig with egg", "note": "Cracked raw onto the sizzling plate for extra richness" },
+      { "name": "Tokwa't baboy", "note": "Crisp tofu and pork in a sharp vinegar dip" }
+    ]
+  },
+  {
+    "id": "apung-ben-grill",
+    "name": "Apung Ben's Grill",
+    "town": "Angeles City",
+    "category": "grill",
+    "signature": "Pindang damulag with garlic rice",
+    "blurb": "A family grill that cures its own carabao meat the old way, sweet and deep red. The sisig here leans smoky, with a little crunch from the charcoal.",
+    "heat": 1,
+    "price": 2,
+    "open": "10:00",
+    "close": "22:00",
+    "dishes": [
+      { "name": "Pindang damulag", "note": "Carabao meat cured sweet and pan-fried until caramelized" },
+      { "name": "Smoky sisig", "note": "Charcoal-grilled pork face, finished with liver spread" },
+      { "name": "Longganisa Pampango", "note": "Garlicky, sweet cured sausage" }
+    ]
+  },
+  {
+    "id": "dau-junction-inihaw",
+    "name": "Dau Junction Inihaw",
+    "town": "Angeles City",
+    "category": "grill",
+    "signature": "Charcoal pork belly skewers",
+    "blurb": "An open-air grill by the junction, popular with jeepney drivers and students. Skewers come off the coals every few minutes, so nothing sits around.",
+    "heat": 1,
+    "price": 1,
+    "open": "15:00",
+    "close": "00:00",
+    "dishes": [
+      { "name": "Inihaw na liempo", "note": "Pork belly basted in soy and calamansi" },
+      { "name": "Chicken isaw", "note": "Grilled chicken intestine, a classic street snack" },
+      { "name": "Sisig rice bowl", "note": "A budget version of the plate, served over rice" }
+    ]
+  },
+  {
+    "id": "bringhe-ni-dalisay",
+    "name": "Bringhe ni Dalisay",
+    "town": "Angeles City",
+    "category": "heritage",
+    "signature": "Banana-leaf bringhe cooked in a clay pot",
+    "blurb": "Dalisay cooks her bringhe in small batches over wood coals, which gives the rice a faint smoky edge. Order ahead on weekends because the pots sell out.",
+    "heat": 0,
+    "price": 2,
+    "open": "09:00",
+    "close": "20:00",
+    "dishes": [
+      { "name": "Bringhe", "note": "Glutinous rice with coconut milk, turmeric and chicken" },
+      { "name": "Kare-kareng kambing", "note": "Goat in a rich peanut stew" },
+      { "name": "Puto pao", "note": "Steamed bun with a savory filling" }
+    ]
+  },
+  {
+    "id": "casa-ligaya",
+    "name": "Casa Ligaya Kapampangan",
+    "town": "Angeles City",
+    "category": "heritage",
+    "signature": "Fiesta table of morcon and bringhe",
+    "blurb": "A restored ancestral-style house that serves the full fiesta spread. It suits big family lunches, and the morcon is sliced thick and tied with care.",
+    "heat": 0,
+    "price": 3,
+    "open": "11:00",
+    "close": "21:00",
+    "dishes": [
+      { "name": "Morcon", "note": "Beef roll stuffed with sausage, egg and pickles in tomato sauce" },
+      { "name": "Bringhe", "note": "Served in a banana-leaf-lined pot" },
+      { "name": "Asadong dila", "note": "Ox tongue braised until fork tender" },
+      { "name": "Tamales", "note": "Rice and peanut parcel steamed in banana leaf" }
+    ]
+  },
+  {
+    "id": "pamilya-sulu-kusina",
+    "name": "Pamilya Sulu Kusina",
+    "town": "Angeles City",
+    "category": "heritage",
+    "signature": "Home-style morcon and kaldereta",
+    "blurb": "A cozy neighborhood kitchen tucked behind a church lot. The menu changes daily and follows whatever the family would cook for a Sunday.",
+    "heat": 1,
+    "price": 2,
+    "open": "10:00",
+    "close": "19:00",
+    "dishes": [
+      { "name": "Morcon", "note": "A Sunday staple, simmered slowly in tomato sauce" },
+      { "name": "Kaldereta", "note": "Beef stew with liver spread and a little chili" },
+      { "name": "Pochero", "note": "Banana and chickpea stew with pork" }
+    ]
+  },
+  {
+    "id": "tibok-corner",
+    "name": "Tibok Corner Dessert Bar",
+    "town": "Angeles City",
+    "category": "sweets",
+    "signature": "Tibok-tibok with toasted latik",
+    "blurb": "A small dessert counter built around one idea: carabao-milk pudding done properly. Tap the plate and it really does tremble.",
+    "heat": 0,
+    "price": 1,
+    "open": "10:00",
+    "close": "21:00",
+    "dishes": [
+      { "name": "Tibok-tibok", "note": "Carabao-milk pudding topped with toasted coconut curds" },
+      { "name": "Sapin-sapin", "note": "Layered glutinous rice cake in three colors" },
+      { "name": "Buko pandan", "note": "A cold coconut and pandan cup" }
+    ]
+  },
+  {
+    "id": "dulce-pampanga",
+    "name": "Dulce Pampanga Kakanin",
+    "town": "Angeles City",
+    "category": "sweets",
+    "signature": "Turrones de casuy and fresh kakanin",
+    "blurb": "A bakery and sweets shop that sells boxes for pasalubong. Everything is made in the morning, so the best choice is early.",
+    "heat": 0,
+    "price": 2,
+    "open": "08:00",
+    "close": "18:00",
+    "dishes": [
+      { "name": "Turrones de casuy", "note": "Cashew marzipan wrapped in wafer paper" },
+      { "name": "Tibok-tibok", "note": "Sold by the plate or in take-home tins" },
+      { "name": "Pastillas de leche", "note": "Soft milk candy, individually wrapped" }
+    ]
+  },
+  {
+    "id": "lola-tessie-panaderia",
+    "name": "Lola Tessie's Panaderia",
+    "town": "Angeles City",
+    "category": "sweets",
+    "signature": "Pan de sal and ensaymada with salted egg",
+    "blurb": "A neighborhood bakery known for warm bread before sunrise. The ensaymada is buttery and sticky, and the coffee is strong and cheap.",
+    "heat": 0,
+    "price": 1,
+    "open": "05:00",
+    "close": "17:00",
+    "dishes": [
+      { "name": "Ensaymada", "note": "Brioche-style roll with butter, sugar and cheese" },
+      { "name": "Pan de sal", "note": "Fresh from the oven, usually gone by nine" },
+      { "name": "Tibok-tibok slice", "note": "A weekend special, limited to one tray" }
+    ]
+  },
+  {
+    "id": "kamaru-kantina",
+    "name": "Kamaru Kantina",
+    "town": "Angeles City",
+    "category": "wild",
+    "signature": "Kamaru adobo and crispy betute",
+    "blurb": "The place to bring a nervous visitor. The staff will explain every dish, and the kamaru, cooked in vinegar and garlic, is surprisingly gentle.",
+    "heat": 2,
+    "price": 2,
+    "open": "11:00",
+    "close": "22:00",
+    "dishes": [
+      { "name": "Kamaru adobo", "note": "Mole crickets in vinegar, garlic and chili" },
+      { "name": "Betute tugak", "note": "Frog stuffed with seasoned pork and fried crisp" },
+      { "name": "Sisig sa kamaru", "note": "A fusion plate, only for the curious" }
+    ]
+  },
+  {
+    "id": "betute-barkada",
+    "name": "Betute Barkada",
+    "town": "Angeles City",
+    "category": "wild",
+    "signature": "Stuffed frog, fried to order",
+    "blurb": "A lively barkada spot that serves adventurous bites with ice-cold beer. Share a few plates, because the portions are small and the dares are big.",
+    "heat": 3,
+    "price": 2,
+    "open": "17:00",
+    "close": "01:00",
+    "dishes": [
+      { "name": "Betute", "note": "Frog with minced pork filling, deep-fried until crisp" },
+      { "name": "Kamaru", "note": "Fiery version with extra siling labuyo" },
+      { "name": "Chicharon bulaklak", "note": "Crispy ruffled pork fat with spicy vinegar" }
+    ]
+  },
+  {
+    "id": "ilog-kainan-sapang-bato",
+    "name": "Ilog Kainan Sapang Bato",
+    "town": "Angeles City",
+    "category": "river",
+    "signature": "Fried hito with buro and mustard greens",
+    "blurb": "A riverside-style eatery that cooks freshwater fish in clay and over coals. The buro dip is tangy and a bit funky, in the best way.",
+    "heat": 1,
+    "price": 2,
+    "open": "10:00",
+    "close": "21:00",
+    "dishes": [
+      { "name": "Hito prito", "note": "Crisp-fried catfish with a sour dip" },
+      { "name": "Buro at mustasa", "note": "Fermented rice and fish, eaten with fresh greens" },
+      { "name": "Sinigang na tilapia", "note": "Sour tamarind soup with vegetables" }
+    ]
+  },
+  {
+    "id": "buro-bahay",
+    "name": "Buro Bahay",
+    "town": "Angeles City",
+    "category": "river",
+    "signature": "House-fermented buro with grilled fish",
+    "blurb": "Buro is the specialty here, fermented in jars out back for weeks. It is served with grilled fish and steaming rice, an acquired taste worth acquiring.",
+    "heat": 1,
+    "price": 1,
+    "open": "11:00",
+    "close": "20:00",
+    "dishes": [
+      { "name": "Buro", "note": "Fermented rice with shrimp or fish, tart and savory" },
+      { "name": "Inihaw na tilapia", "note": "Grilled whole fish stuffed with tomato and onion" },
+      { "name": "Ginataang kuhol", "note": "Snails in coconut milk and chili leaves" }
+    ]
+  },
+  {
+    "id": "pampang-seafood-hub",
+    "name": "Pampang Seafood Hub",
+    "town": "Angeles City",
+    "category": "river",
+    "signature": "Garlic butter prawns and crab in coconut milk",
+    "blurb": "A boodle-fight style hall for groups. Plates are laid on banana leaves down the table and everyone eats with their hands.",
+    "heat": 1,
+    "price": 3,
+    "open": "11:00",
+    "close": "22:00",
+    "dishes": [
+      { "name": "Garlic butter prawns", "note": "Large river prawns in a rich garlic sauce" },
+      { "name": "Alimango sa gata", "note": "Crab in coconut milk" },
+      { "name": "Buro dip platter", "note": "Fermented rice dip served with grilled seafood" }
+    ]
+  }
+]

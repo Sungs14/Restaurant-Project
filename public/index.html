@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mangan Tamu | Kapampangan restaurants in Pampanga</title>
+    <meta
+      name="description"
+      content="Find where to eat in Pampanga, the culinary capital of the Philippines. Sisig, bringhe, tibok-tibok and more."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <a class="skip" href="#results">Skip to restaurants</a>
+
+    <!-- HERO -->
+    <header class="hero" id="top" data-mode="0">
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="wordmark">Mangan Tamu</p>
+          <h1>Let's eat, Pampanga-style.</h1>
+          <p class="hero__lede">
+            Pampanga calls itself the culinary capital of the Philippines.
+            Find a table in ten towns, from sizzling sisig in Angeles to
+            golden bringhe in Guagua.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--gold" href="#results">Browse the tables</a>
+            <button class="btn btn--ghost" type="button" id="lightsBtn">
+              Change the lantern lights
+            </button>
+          </div>
+        </div>
+
+        <button
+          class="parul"
+          type="button"
+          id="parul"
+          aria-label="Giant lantern. Press to change the light pattern."
+        >
+          <svg viewBox="-230 -230 460 460" aria-hidden="true" focusable="false" id="parulSvg"></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- DISH EXPLORER -->
+      <section class="dishes" aria-labelledby="dishesTitle">
+        <div class="wrap dishes__grid">
+          <div class="dishes__intro">
+            <h2 id="dishesTitle">New to Kapampangan food?</h2>
+            <p>Pick a dish to see what it is, then find the places that cook it.</p>
+          </div>
+
+          <div class="dishes__tabs" role="tablist" aria-label="Kapampangan dishes" id="dishTabs"></div>
+
+          <div class="dishes__panel" role="tabpanel" id="dishPanel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- FILTERS -->
+      <section class="filters" aria-label="Filter restaurants" id="filters">
+        <div class="wrap filters__stack">
+          <div class="filters__row filters__row--top">
+            <label class="search">
+              <span class="visually-hidden">Search by name, town or dish</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <input id="search" type="search" placeholder="Search a dish, town or name" autocomplete="off" />
+            </label>
+
+            <label class="select">
+              <span>Sort by</span>
+              <select id="sort">
+                <option value="name">Name</option>
+                <option value="price-asc">Price, low to high</option>
+                <option value="price-desc">Price, high to low</option>
+                <option value="heat">Spiciest first</option>
+              </select>
+            </label>
+
+            <label class="select">
+              <span>Group by</span>
+              <select id="group">
+                <option value="">None</option>
+                <option value="category">Kind of food</option>
+                <option value="town">Town</option>
+              </select>
+            </label>
+
+            <button class="toggle" type="button" id="savedToggle" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.600-7.500 10.200-7.500 10.200Z"/></svg>
+              Saved <span id="savedCount">0</span>
+            </button>
+          </div>
+
+          <div class="filters__group">
+            <p class="filters__label" id="townLabel">Town</p>
+            <div class="chips chips--scroll" role="group" aria-labelledby="townLabel" id="townChips"></div>
+          </div>
+
+          <div class="filters__group">
+            <p class="filters__label" id="catLabel">Kind of food</p>
+            <div class="chips" role="group" aria-labelledby="catLabel" id="catChips"></div>
+          </div>
+
+          <div class="filters__group">
+            <p class="filters__label" id="heatLabel">Heat</p>
+            <div class="chips" role="group" aria-labelledby="heatLabel" id="heatChips"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULTS -->
+      <section class="results wrap" id="results" aria-labelledby="resultsTitle">
+        <div class="results__head">
+          <h2 id="resultsTitle">Where to eat</h2>
+          <p class="results__count" id="count" role="status" aria-live="polite"></p>
+          <button class="btn btn--leaf" type="button" id="surprise">Pick one for me</button>
+          <button class="btn btn--gold btn--dark" type="button" id="addBtn">Add a restaurant</button>
+        </div>
+
+        <div class="grid" id="grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <h3>No tables match those filters</h3>
+          <p>Try a different town or heat level, or clear everything and start again.</p>
+          <button class="btn btn--leaf" type="button" id="clearBtn">Clear filters</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <p class="footer__big">Dakal a salamat. Mangan tamu pa.</p>
+        <p class="footer__small">
+          Thank you, and let's eat again. Restaurants listed here are sample
+          data for a design project, not real businesses.
+        </p>
+      </div>
+    </footer>
+
+    <!-- DETAIL DIALOG -->
+    <dialog class="sheet" id="sheet" aria-labelledby="sheetName">
+      <form method="dialog" class="sheet__close">
+        <button aria-label="Close details">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.200" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+      <div id="sheetBody"></div>
+    </dialog>
+
+    <!-- ADD / EDIT DIALOG -->
+    <dialog class="sheet formsheet" id="formDialog" aria-labelledby="formTitle">
+      <form method="dialog" class="sheet__close">
+        <button aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.200" stroke-linecap="round"/></svg></button>
+      </form>
+      <form id="restForm" class="restform">
+        <h2 id="formTitle">Add a restaurant</h2>
+        <label>Name <input id="fName" required maxlength="80" /></label>
+        <label>Town <input id="fTown" required value="Angeles City" /></label>
+        <label>Kind of food <select id="fCategory"></select></label>
+        <label>Signature dish <input id="fSignature" /></label>
+        <label>Description <textarea id="fBlurb" rows="3"></textarea></label>
+        <div class="restform__row">
+          <label>Heat <select id="fHeat"><option value="0">Not spicy</option><option value="1">Mild</option><option value="2">Spicy</option><option value="3">Fiery</option></select></label>
+          <label>Price <select id="fPrice"><option value="1">Budget</option><option value="2">Mid</option><option value="3">Splurge</option></select></label>
+        </div>
+        <div class="restform__row">
+          <label>Opens <input id="fOpen" type="time" required value="10:00" /></label>
+          <label>Closes <input id="fClose" type="time" required value="21:00" /></label>
+        </div>
+        <label>Dishes <small>one per line: name | short note</small>
+          <textarea id="fDishes" rows="4" placeholder="Pork sisig | Grilled and chopped, with calamansi"></textarea></label>
+        <p class="restform__error" id="formError" role="alert"></p>
+        <button class="btn btn--leaf" type="submit" id="formSubmit">Save</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
