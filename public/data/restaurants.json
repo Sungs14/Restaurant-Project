@@ -11,9 +11,45 @@
     "open": "11:00",
     "close": "02:00",
     "dishes": [
-      { "name": "Pork sisig", "note": "Chopped, grilled and seasoned with onion, chili and calamansi" },
-      { "name": "Sisig with egg", "note": "Cracked raw onto the sizzling plate for extra richness" },
-      { "name": "Tokwa't baboy", "note": "Crisp tofu and pork in a sharp vinegar dip" }
+      {
+        "name": "Pork sisig",
+        "note": "Chopped, grilled and seasoned with onion, chili and calamansi"
+      },
+      {
+        "name": "Sisig with egg",
+        "note": "Cracked raw onto the sizzling plate for extra richness"
+      },
+      {
+        "name": "Tokwa't baboy",
+        "note": "Crisp tofu and pork in a sharp vinegar dip"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 18
+      }
     ]
   },
   {
@@ -28,9 +64,45 @@
     "open": "10:00",
     "close": "22:00",
     "dishes": [
-      { "name": "Pindang damulag", "note": "Carabao meat cured sweet and pan-fried until caramelized" },
-      { "name": "Smoky sisig", "note": "Charcoal-grilled pork face, finished with liver spread" },
-      { "name": "Longganisa Pampango", "note": "Garlicky, sweet cured sausage" }
+      {
+        "name": "Pindang damulag",
+        "note": "Carabao meat cured sweet and pan-fried until caramelized"
+      },
+      {
+        "name": "Smoky sisig",
+        "note": "Charcoal-grilled pork face, finished with liver spread"
+      },
+      {
+        "name": "Longganisa Pampango",
+        "note": "Garlicky, sweet cured sausage"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 18
+      }
     ]
   },
   {
@@ -45,9 +117,45 @@
     "open": "15:00",
     "close": "00:00",
     "dishes": [
-      { "name": "Inihaw na liempo", "note": "Pork belly basted in soy and calamansi" },
-      { "name": "Chicken isaw", "note": "Grilled chicken intestine, a classic street snack" },
-      { "name": "Sisig rice bowl", "note": "A budget version of the plate, served over rice" }
+      {
+        "name": "Inihaw na liempo",
+        "note": "Pork belly basted in soy and calamansi"
+      },
+      {
+        "name": "Chicken isaw",
+        "note": "Grilled chicken intestine, a classic street snack"
+      },
+      {
+        "name": "Sisig rice bowl",
+        "note": "A budget version of the plate, served over rice"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 15
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "C",
+        "score": 14
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 15
+      }
     ]
   },
   {
@@ -62,9 +170,45 @@
     "open": "09:00",
     "close": "20:00",
     "dishes": [
-      { "name": "Bringhe", "note": "Glutinous rice with coconut milk, turmeric and chicken" },
-      { "name": "Kare-kareng kambing", "note": "Goat in a rich peanut stew" },
-      { "name": "Puto pao", "note": "Steamed bun with a savory filling" }
+      {
+        "name": "Bringhe",
+        "note": "Glutinous rice with coconut milk, turmeric and chicken"
+      },
+      {
+        "name": "Kare-kareng kambing",
+        "note": "Goat in a rich peanut stew"
+      },
+      {
+        "name": "Puto pao",
+        "note": "Steamed bun with a savory filling"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 19
+      }
     ]
   },
   {
@@ -79,10 +223,49 @@
     "open": "11:00",
     "close": "21:00",
     "dishes": [
-      { "name": "Morcon", "note": "Beef roll stuffed with sausage, egg and pickles in tomato sauce" },
-      { "name": "Bringhe", "note": "Served in a banana-leaf-lined pot" },
-      { "name": "Asadong dila", "note": "Ox tongue braised until fork tender" },
-      { "name": "Tamales", "note": "Rice and peanut parcel steamed in banana leaf" }
+      {
+        "name": "Morcon",
+        "note": "Beef roll stuffed with sausage, egg and pickles in tomato sauce"
+      },
+      {
+        "name": "Bringhe",
+        "note": "Served in a banana-leaf-lined pot"
+      },
+      {
+        "name": "Asadong dila",
+        "note": "Ox tongue braised until fork tender"
+      },
+      {
+        "name": "Tamales",
+        "note": "Rice and peanut parcel steamed in banana leaf"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 19
+      }
     ]
   },
   {
@@ -97,9 +280,45 @@
     "open": "10:00",
     "close": "19:00",
     "dishes": [
-      { "name": "Morcon", "note": "A Sunday staple, simmered slowly in tomato sauce" },
-      { "name": "Kaldereta", "note": "Beef stew with liver spread and a little chili" },
-      { "name": "Pochero", "note": "Banana and chickpea stew with pork" }
+      {
+        "name": "Morcon",
+        "note": "A Sunday staple, simmered slowly in tomato sauce"
+      },
+      {
+        "name": "Kaldereta",
+        "note": "Beef stew with liver spread and a little chili"
+      },
+      {
+        "name": "Pochero",
+        "note": "Banana and chickpea stew with pork"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 16
+      }
     ]
   },
   {
@@ -114,9 +333,45 @@
     "open": "10:00",
     "close": "21:00",
     "dishes": [
-      { "name": "Tibok-tibok", "note": "Carabao-milk pudding topped with toasted coconut curds" },
-      { "name": "Sapin-sapin", "note": "Layered glutinous rice cake in three colors" },
-      { "name": "Buko pandan", "note": "A cold coconut and pandan cup" }
+      {
+        "name": "Tibok-tibok",
+        "note": "Carabao-milk pudding topped with toasted coconut curds"
+      },
+      {
+        "name": "Sapin-sapin",
+        "note": "Layered glutinous rice cake in three colors"
+      },
+      {
+        "name": "Buko pandan",
+        "note": "A cold coconut and pandan cup"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 18
+      }
     ]
   },
   {
@@ -131,9 +386,45 @@
     "open": "08:00",
     "close": "18:00",
     "dishes": [
-      { "name": "Turrones de casuy", "note": "Cashew marzipan wrapped in wafer paper" },
-      { "name": "Tibok-tibok", "note": "Sold by the plate or in take-home tins" },
-      { "name": "Pastillas de leche", "note": "Soft milk candy, individually wrapped" }
+      {
+        "name": "Turrones de casuy",
+        "note": "Cashew marzipan wrapped in wafer paper"
+      },
+      {
+        "name": "Tibok-tibok",
+        "note": "Sold by the plate or in take-home tins"
+      },
+      {
+        "name": "Pastillas de leche",
+        "note": "Soft milk candy, individually wrapped"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 18
+      }
     ]
   },
   {
@@ -148,9 +439,45 @@
     "open": "05:00",
     "close": "17:00",
     "dishes": [
-      { "name": "Ensaymada", "note": "Brioche-style roll with butter, sugar and cheese" },
-      { "name": "Pan de sal", "note": "Fresh from the oven, usually gone by nine" },
-      { "name": "Tibok-tibok slice", "note": "A weekend special, limited to one tray" }
+      {
+        "name": "Ensaymada",
+        "note": "Brioche-style roll with butter, sugar and cheese"
+      },
+      {
+        "name": "Pan de sal",
+        "note": "Fresh from the oven, usually gone by nine"
+      },
+      {
+        "name": "Tibok-tibok slice",
+        "note": "A weekend special, limited to one tray"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 15
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 16
+      }
     ]
   },
   {
@@ -165,9 +492,45 @@
     "open": "11:00",
     "close": "22:00",
     "dishes": [
-      { "name": "Kamaru adobo", "note": "Mole crickets in vinegar, garlic and chili" },
-      { "name": "Betute tugak", "note": "Frog stuffed with seasoned pork and fried crisp" },
-      { "name": "Sisig sa kamaru", "note": "A fusion plate, only for the curious" }
+      {
+        "name": "Kamaru adobo",
+        "note": "Mole crickets in vinegar, garlic and chili"
+      },
+      {
+        "name": "Betute tugak",
+        "note": "Frog stuffed with seasoned pork and fried crisp"
+      },
+      {
+        "name": "Sisig sa kamaru",
+        "note": "A fusion plate, only for the curious"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 17
+      }
     ]
   },
   {
@@ -182,9 +545,45 @@
     "open": "17:00",
     "close": "01:00",
     "dishes": [
-      { "name": "Betute", "note": "Frog with minced pork filling, deep-fried until crisp" },
-      { "name": "Kamaru", "note": "Fiery version with extra siling labuyo" },
-      { "name": "Chicharon bulaklak", "note": "Crispy ruffled pork fat with spicy vinegar" }
+      {
+        "name": "Betute",
+        "note": "Frog with minced pork filling, deep-fried until crisp"
+      },
+      {
+        "name": "Kamaru",
+        "note": "Fiery version with extra siling labuyo"
+      },
+      {
+        "name": "Chicharon bulaklak",
+        "note": "Crispy ruffled pork fat with spicy vinegar"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 15
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 15
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 15
+      }
     ]
   },
   {
@@ -199,9 +598,45 @@
     "open": "10:00",
     "close": "21:00",
     "dishes": [
-      { "name": "Hito prito", "note": "Crisp-fried catfish with a sour dip" },
-      { "name": "Buro at mustasa", "note": "Fermented rice and fish, eaten with fresh greens" },
-      { "name": "Sinigang na tilapia", "note": "Sour tamarind soup with vegetables" }
+      {
+        "name": "Hito prito",
+        "note": "Crisp-fried catfish with a sour dip"
+      },
+      {
+        "name": "Buro at mustasa",
+        "note": "Fermented rice and fish, eaten with fresh greens"
+      },
+      {
+        "name": "Sinigang na tilapia",
+        "note": "Sour tamarind soup with vegetables"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 18
+      }
     ]
   },
   {
@@ -216,9 +651,45 @@
     "open": "11:00",
     "close": "20:00",
     "dishes": [
-      { "name": "Buro", "note": "Fermented rice with shrimp or fish, tart and savory" },
-      { "name": "Inihaw na tilapia", "note": "Grilled whole fish stuffed with tomato and onion" },
-      { "name": "Ginataang kuhol", "note": "Snails in coconut milk and chili leaves" }
+      {
+        "name": "Buro",
+        "note": "Fermented rice with shrimp or fish, tart and savory"
+      },
+      {
+        "name": "Inihaw na tilapia",
+        "note": "Grilled whole fish stuffed with tomato and onion"
+      },
+      {
+        "name": "Ginataang kuhol",
+        "note": "Snails in coconut milk and chili leaves"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "B",
+        "score": 17
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "B",
+        "score": 16
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "B",
+        "score": 17
+      }
     ]
   },
   {
@@ -233,9 +704,45 @@
     "open": "11:00",
     "close": "22:00",
     "dishes": [
-      { "name": "Garlic butter prawns", "note": "Large river prawns in a rich garlic sauce" },
-      { "name": "Alimango sa gata", "note": "Crab in coconut milk" },
-      { "name": "Buro dip platter", "note": "Fermented rice dip served with grilled seafood" }
+      {
+        "name": "Garlic butter prawns",
+        "note": "Large river prawns in a rich garlic sauce"
+      },
+      {
+        "name": "Alimango sa gata",
+        "note": "Crab in coconut milk"
+      },
+      {
+        "name": "Buro dip platter",
+        "note": "Fermented rice dip served with grilled seafood"
+      }
+    ],
+    "scores": [
+      {
+        "date": "2026-08-12",
+        "grade": "A",
+        "score": 19
+      },
+      {
+        "date": "2026-06-03",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2026-03-21",
+        "grade": "A",
+        "score": 18
+      },
+      {
+        "date": "2025-12-09",
+        "grade": "A",
+        "score": 20
+      },
+      {
+        "date": "2025-09-17",
+        "grade": "A",
+        "score": 19
+      }
     ]
   }
 ]

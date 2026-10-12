@@ -34,6 +34,7 @@
           </p>
           <div class="hero__actions">
             <a class="btn btn--gold" href="#results">Browse the tables</a>
+            <a class="btn btn--ghost" href="manage.html">Manage restaurants</a>
             <button class="btn btn--ghost" type="button" id="lightsBtn">
               Change the lantern lights
             </button>
@@ -83,7 +84,6 @@
                 <option value="price-asc">Price, low to high</option>
                 <option value="price-desc">Price, high to low</option>
                 <option value="heat">Spiciest first</option>
-                <option value="rating">Highest rated</option>
               </select>
             </label>
 
@@ -100,6 +100,16 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.600-7.500 10.200-7.500 10.200Z"/></svg>
               Saved <span id="savedCount">0</span>
             </button>
+
+            <button class="toggle" type="button" id="bestBtn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.500 2.600 5.300 5.800.8-4.200 4.100 1 5.800L12 16.800l-5.200 2.700 1-5.800-4.200-4.100 5.800-.8L12 3.500Z" stroke-linejoin="round"/></svg>
+              Best quality
+            </button>
+
+            <a class="toggle" href="manage.html">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z" stroke-linejoin="round"/><path d="m13.500 6.500 4 4"/></svg>
+              Manage restaurants
+            </a>
           </div>
 
           <div class="filters__group">
@@ -116,18 +126,7 @@
             <p class="filters__label" id="heatLabel">Heat</p>
             <div class="chips" role="group" aria-labelledby="heatLabel" id="heatChips"></div>
           </div>
-
-          <div class="filters__group">
-            <p class="filters__label" id="ratingLabel">Rating</p>
-            <div class="chips" role="group" aria-labelledby="ratingLabel" id="ratingChips"></div>
-          </div>
         </div>
-      </section>
-
-      <!-- TOP RATED -->
-      <section class="toprated wrap" aria-labelledby="topTitle">
-        <h2 id="topTitle">Top rated</h2>
-        <ol class="toprated__list" id="topList"></ol>
       </section>
 
       <!-- RESULTS -->
@@ -136,7 +135,6 @@
           <h2 id="resultsTitle">Where to eat</h2>
           <p class="results__count" id="count" role="status" aria-live="polite"></p>
           <button class="btn btn--leaf" type="button" id="surprise">Pick one for me</button>
-          <button class="btn btn--gold btn--dark" type="button" id="addBtn">Add a restaurant</button>
         </div>
 
         <div class="grid" id="grid"></div>
@@ -147,6 +145,7 @@
           <button class="btn btn--leaf" type="button" id="clearBtn">Clear filters</button>
         </div>
       </section>
+
     </main>
 
     <footer class="footer">
@@ -169,31 +168,25 @@
       <div id="sheetBody"></div>
     </dialog>
 
-    <!-- ADD / EDIT DIALOG -->
-    <dialog class="sheet formsheet" id="formDialog" aria-labelledby="formTitle">
+    <!-- BEST QUALITY DIALOG -->
+    <dialog class="sheet bestsheet" id="bestDialog" aria-labelledby="bestTitle">
       <form method="dialog" class="sheet__close">
         <button aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.200" stroke-linecap="round"/></svg></button>
       </form>
-      <form id="restForm" class="restform">
-        <h2 id="formTitle">Add a restaurant</h2>
-        <label>Name <input id="fName" required maxlength="80" /></label>
-        <label>Town <input id="fTown" required value="Angeles City" /></label>
-        <label>Kind of food <select id="fCategory"></select></label>
-        <label>Signature dish <input id="fSignature" /></label>
-        <label>Description <textarea id="fBlurb" rows="3"></textarea></label>
-        <div class="restform__row">
-          <label>Heat <select id="fHeat"><option value="0">Not spicy</option><option value="1">Mild</option><option value="2">Spicy</option><option value="3">Fiery</option></select></label>
-          <label>Price <select id="fPrice"><option value="1">Budget</option><option value="2">Mid</option><option value="3">Splurge</option></select></label>
+      <div class="best">
+        <h2 id="bestTitle">Best quality restaurants</h2>
+        <p class="best__sub">Aggregated scores greater than 90</p>
+        <div class="manage__tools">
+          <label>Search keyword <input id="bestSearch" type="search" placeholder="Enter a keyword" autocomplete="off" /></label>
         </div>
-        <div class="restform__row">
-          <label>Opens <input id="fOpen" type="time" required value="10:00" /></label>
-          <label>Closes <input id="fClose" type="time" required value="21:00" /></label>
+        <div class="manage__scroll">
+          <table class="manage__table">
+            <thead><tr><th>Name</th><th>Town</th><th>Kind of food</th><th>Grades</th><th>Total score</th></tr></thead>
+            <tbody id="bestBody"></tbody>
+          </table>
         </div>
-        <label>Dishes <small>one per line: name | short note</small>
-          <textarea id="fDishes" rows="4" placeholder="Pork sisig | Grilled and chopped, with calamansi"></textarea></label>
-        <p class="restform__error" id="formError" role="alert"></p>
-        <button class="btn btn--leaf" type="submit" id="formSubmit">Save</button>
-      </form>
+        <p class="manage__count" id="bestCount" role="status" aria-live="polite"></p>
+      </div>
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

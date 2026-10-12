@@ -10,7 +10,6 @@ const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
 const Restaurant = require("./models/Restaurant");
-const Rating = require("./models/Rating");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,7 +41,7 @@ if (!hasPublicIndex) {
 /* ---------- helpers ---------- */
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-const FIELDS = ["name", "town", "category", "signature", "blurb", "heat", "price", "open", "close", "dishes"];
+const FIELDS = ["name", "town", "category", "signature", "blurb", "heat", "price", "open", "close", "dishes", "scores"];
 const pick = (b = {}) => Object.fromEntries(FIELDS.filter((k) => k in b).map((k) => [k, b[k]]));
 
 async function newId(name) {
@@ -82,6 +81,34 @@ app.get(
   })
 );
 
+// GET /api/restaurants/top?min=90
+// Aggregate: sum every restaurant's scores, keep totals greater than the threshold.
+app.get(
+  "/api/restaurants/top",
+  wrap(async (req, res) => {
+    const min = Number(req.query.min);
+    const threshold = Number.isFinite(min) ? min : 90;
+    const rows = await Restaurant.aggregate([
+      { $unwind: "$scores" },
+      {
+        $group: {
+          _id: "$id",
+          name: { $first: "$name" },
+          town: { $first: "$town" },
+          category: { $first: "$category" },
+          totalScore: { $sum: "$scores.score" },
+          avgScore: { $avg: "$scores.score" },
+          reviews: { $sum: 1 },
+          grades: { $push: "$scores.grade" },
+        },
+      },
+      { $match: { totalScore: { $gt: threshold } } },
+      { $sort: { totalScore: -1, name: 1 } },
+    ]);
+    res.json(rows.map(({ _id, ...rest }) => ({ id: _id, ...rest })));
+  })
+);
+
 app.get(
   "/api/restaurants/:id",
   wrap(async (req, res) => {
@@ -95,7 +122,6 @@ app.post(
   "/api/restaurants",
   wrap(async (req, res) => {
     const doc = await Restaurant.create({ ...pick(req.body), id: await newId(req.body && req.body.name) });
-    await Rating.seedRandom([doc.id]); // default random ratings
     res.status(201).json(doc);
   })
 );
@@ -117,52 +143,7 @@ app.delete(
   wrap(async (req, res) => {
     const doc = await Restaurant.findOneAndDelete({ id: String(req.params.id) });
     if (!doc) return res.status(404).json({ error: "Not found" });
-    await Rating.deleteMany({ restaurantId: doc.id });
     res.status(204).end();
-  })
-);
-
-/* ---------- ratings ---------- */
-
-// Average + count per restaurant, using the MongoDB aggregation pipeline.
-const avgStage = [{ $group: { _id: "$restaurantId", avg: { $avg: "$stars" }, count: { $sum: 1 } } }];
-
-// Gives restaurants that have no ratings yet some random default ones.
-async function seedMissingRatings() {
-  const [restaurants, rated] = await Promise.all([Restaurant.find({}, "id").lean(), Rating.distinct("restaurantId")]);
-  const have = new Set(rated);
-  const missing = restaurants.map((r) => r.id).filter((id) => id && !have.has(id));
-  if (missing.length) console.log(`Added ${await Rating.seedRandom(missing)} default ratings for ${missing.length} restaurants`);
-}
-
-// Runs before the rating routes answer, so any restaurant without ratings
-// (added by hand, imported, or created while the server was off) gets random defaults.
-let ensuring = null;
-const ensureRatings = () => (ensuring ||= seedMissingRatings().finally(() => (ensuring = null)));
-
-// GET /api/ratings/top  -> highest rated restaurants (default top 5)
-app.get(
-  "/api/ratings/top",
-  wrap(async (req, res) => {
-    await ensureRatings();
-    const limit = Math.min(Number(req.query.limit) || 5, 20);
-    const top = await Rating.aggregate([
-      ...avgStage,
-      { $sort: { avg: -1, count: -1, _id: 1 } },
-      { $limit: limit },
-      { $project: { _id: 0, id: "$_id", avg: { $round: ["$avg", 1] }, count: 1 } },
-    ]);
-    res.json(top);
-  })
-);
-
-// GET /api/ratings/summary  -> { "restaurant-id": { avg, count }, ... } for the cards
-app.get(
-  "/api/ratings/summary",
-  wrap(async (req, res) => {
-    await ensureRatings();
-    const rows = await Rating.aggregate(avgStage);
-    res.json(Object.fromEntries(rows.map((r) => [r._id, { avg: Math.round(r.avg * 10) / 10, count: r.count }])));
   })
 );
 
@@ -172,15 +153,8 @@ app.use("/api", (req, res) => res.status(404).json({ error: "Unknown API route" 
 /* ---------- start ---------- */
 mongoose
   .connect(MONGODB_URI)
-  .then(async () => {
+  .then(() => {
     console.log("Connected to MongoDB");
-    try {
-      await Rating.deleteMany({ voter: { $exists: false } }); // ratings from the earlier version
-      await Rating.createIndexes();
-      await seedMissingRatings();
-    } catch (err) {
-      console.warn("Ratings setup problem:", err.message);
-    }
     app.listen(PORT, () => console.log(`Mangan Tamu running at http://localhost:${PORT}`));
   })
   .catch((err) => {

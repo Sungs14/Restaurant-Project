@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage restaurants | Mangan Tamu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="pagebar">
+      <p class="wordmark">Mangan Tamu</p>
+      <a class="btn btn--ghost" href="index.html">Back to the site</a>
+    </header>
+
+    <main>
+      <section class="manage wrap" id="manage" aria-labelledby="manageTitle">
+        <div class="manage__head">
+          <div>
+            <h2 id="manageTitle">Manage restaurants</h2>
+            <p>Add, edit or remove restaurants in the database.</p>
+          </div>
+          <button class="btn btn--leaf" type="button" id="addBtn">Add a restaurant</button>
+        </div>
+        <div class="manage__tools">
+          <label>Search keyword <input id="mSearch" type="search" placeholder="Enter a keyword" autocomplete="off" /></label>
+          <label>Town <select id="mTown"><option value="">All towns</option></select></label>
+        </div>
+        <div class="manage__scroll">
+          <table class="manage__table">
+            <thead>
+              <tr><th>Name</th><th>Town</th><th>Kind of food</th><th>Signature dish</th><th>Hours</th><th>Score</th><th><span class="visually-hidden">Actions</span></th></tr>
+            </thead>
+            <tbody id="manageBody"></tbody>
+          </table>
+        </div>
+        <p class="manage__count" id="manageCount" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <!-- ADD / EDIT DIALOG -->
+    <dialog class="sheet formsheet" id="formDialog" aria-labelledby="formTitle">
+      <form method="dialog" class="sheet__close">
+        <button aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="2.200" stroke-linecap="round"/></svg></button>
+      </form>
+      <form id="restForm" class="restform">
+        <h2 id="formTitle">Add a restaurant</h2>
+        <label>Name <input id="fName" required maxlength="80" /></label>
+        <label>Town <input id="fTown" required value="Angeles City" /></label>
+        <label>Kind of food <select id="fCategory"></select></label>
+        <label>Signature dish <input id="fSignature" /></label>
+        <label>Description <textarea id="fBlurb" rows="3"></textarea></label>
+        <div class="restform__row">
+          <label>Heat <select id="fHeat"><option value="0">Not spicy</option><option value="1">Mild</option><option value="2">Spicy</option><option value="3">Fiery</option></select></label>
+          <label>Price <select id="fPrice"><option value="1">Budget</option><option value="2">Mid</option><option value="3">Splurge</option></select></label>
+        </div>
+        <div class="restform__row">
+          <label>Opens <input id="fOpen" type="time" required value="10:00" /></label>
+          <label>Closes <input id="fClose" type="time" required value="21:00" /></label>
+        </div>
+        <label>Dishes <small>one per line: name | short note</small>
+          <textarea id="fDishes" rows="4" placeholder="Pork sisig | Grilled and chopped, with calamansi"></textarea></label>
+        <label>Scores <small>0 to 20 each, separated by commas</small>
+          <input id="fScores" placeholder="18, 20, 18, 19, 18" autocomplete="off" /></label>
+        <details class="scoreguide">
+          <summary>How to score a visit</summary>
+          <p>Each number is one visit, scored out of <strong>20</strong>. Rate four things from 0 to 5 and add them up:</p>
+          <ul>
+            <li><strong>Food:</strong> taste, freshness and how well the dishes are cooked</li>
+            <li><strong>Service:</strong> friendliness and how quickly the food arrives</li>
+            <li><strong>Cleanliness:</strong> tables, kitchen view and restrooms</li>
+            <li><strong>Value:</strong> is the portion and quality worth the price?</li>
+          </ul>
+          <p class="scoreguide__scale">0 = poor, 1 = weak, 2 = okay, 3 = good, 4 = very good, 5 = excellent</p>
+          <p>Grades: <strong>A</strong> is 18 to 20, <strong>B</strong> is 15 to 17, <strong>C</strong> is below 15. Example: food 5 + service 4 + cleanliness 5 + value 4 = <strong>18</strong>.</p>
+          <p>To make Best quality, five visits need to total more than 90, which means averaging about 18.</p>
+        </details>
+        <p class="restform__hint" id="scoreHint"></p>
+        <p class="restform__error" id="formError" role="alert"></p>
+        <button class="btn btn--leaf" type="submit" id="formSubmit">Save</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="manage.js"></script>
+  </body>
+</html>

@@ -20,6 +20,15 @@ const restaurantSchema = new mongoose.Schema(
     price: { type: Number, min: 1, max: 3, default: 1 },
     open: { type: String, match: HHMM, required: true },
     close: { type: String, match: HHMM, required: true },
+    // review/inspection scores (0-20 each). The "best quality" aggregate sums these.
+    scores: [
+      {
+        _id: false,
+        date: { type: String },
+        grade: { type: String, enum: ["A", "B", "C"] },
+        score: { type: Number, min: 0, max: 20, required: true },
+      },
+    ],
     dishes: [
       {
         _id: false,
