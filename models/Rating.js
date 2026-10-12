@@ -23,7 +23,13 @@ ratingSchema.statics.seedRandom = async function (ids) {
       docs.push({ restaurantId: id, voter: `seed-${i}`, stars });
     }
   }
-  if (docs.length) await this.insertMany(docs);
+  if (docs.length) {
+    try {
+      await this.insertMany(docs, { ordered: false });
+    } catch (err) {
+      if (err.code !== 11000) throw err; // duplicates just mean another request already seeded them
+    }
+  }
   return docs.length;
 };
 

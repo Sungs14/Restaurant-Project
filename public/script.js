@@ -91,8 +91,6 @@ const state = {
   saved: new Set(),
   group: "",
   ratings: {}, // { restaurantId: { avg, count } } from /api/ratings/summary
-  mine: {}, // this browser's own ratings: { restaurantId: stars }
-  voter: "", // anonymous id: one editable rating per place per browser
   minRating: "any",
 };
 
@@ -534,10 +532,6 @@ function openSheet(id) {
           ${r.dishes.map((d) => `<li><strong>${esc(d.name)}</strong><span>${esc(d.note)}</span></li>`).join("")}
         </ul>
       </div>
-      <div class="rate">
-        <h3>Rate this place</h3>
-        ${rateStars(r.id)}
-      </div>
       <div class="sheet__actions">
         <button class="btn btn--leaf btn--save" type="button" data-save="${r.id}" aria-pressed="${saved}">${saved ? "Saved" : "Save this place"}</button>
         <button class="btn btn--outline" type="button" data-share="${r.id}">Copy name and town</button>
@@ -551,8 +545,6 @@ function openSheet(id) {
 }
 
 els.sheetBody.addEventListener("click", (e) => {
-  const star = e.target.closest("[data-rate]");
-  if (star) return submitRating(star.closest("[data-rate-for]").dataset.rateFor, Number(star.dataset.rate));
   const save = e.target.closest("[data-save]");
   if (save) return toggleSaved(save.dataset.save);
   const edit = e.target.closest("[data-edit]");
@@ -582,40 +574,13 @@ els.sheet.addEventListener("click", (e) => {
 
 /* ---------------- ratings ---------------- */
 
-// Each browser gets an anonymous id, so its rating for a place can be changed later.
-function getVoter() {
-  try {
-    let v = localStorage.getItem("mt-voter");
-    if (!v) {
-      v = crypto.randomUUID ? crypto.randomUUID() : "guest-" + Date.now() + Math.random().toString(16).slice(2);
-      localStorage.setItem("mt-voter", v);
-    }
-    return v;
-  } catch (e) {
-    return "guest-" + Math.random().toString(16).slice(2, 12);
-  }
-}
-
-function rateStars(id) {
-  const mine = state.mine[id] || 0;
-  let out = `<div class="rate__stars" role="group" aria-label="Rate from 1 to 5 stars" data-rate-for="${id}">`;
-  for (let i = 1; i <= 5; i++) {
-    const star = SVG.star.replace("<svg", `<svg class="${i <= mine ? "on" : ""}"`);
-    out += `<button type="button" data-rate="${i}" aria-pressed="${i === mine}" aria-label="${i} ${i === 1 ? "star" : "stars"}">${star}</button>`;
-  }
-  out += `</div><p class="rate__note">${mine ? `Your rating: ${mine} out of 5. Tap a star to change it.` : "Tap a star to rate."}</p>`;
-  return out;
-}
-
 async function loadRatings() {
   try {
-    const [summary, top, mine] = await Promise.all([
+    const [summary, top] = await Promise.all([
       request("GET", "/api/ratings/summary"),
       request("GET", "/api/ratings/top?limit=10"),
-      request("GET", `/api/ratings/mine?voter=${encodeURIComponent(state.voter)}`),
     ]);
     state.ratings = summary;
-    state.mine = mine;
     renderTop(top);
   } catch (e) {
     renderTop([]); // ratings are optional: the page still works without them
@@ -640,20 +605,7 @@ function renderTop(top) {
       </li>`
         )
         .join("")
-    : `<li class="top__empty">No ratings yet. Open a restaurant and give it some stars.</li>`;
-}
-
-async function submitRating(id, stars) {
-  const changing = Boolean(state.mine[id]);
-  try {
-    await request("POST", `/api/restaurants/${encodeURIComponent(id)}/rate`, { stars, voter: state.voter });
-    await loadRatings();
-    render();
-    openSheet(id);
-    toast(changing ? "Rating updated" : "Thanks for rating!");
-  } catch (err) {
-    toast(err.message);
-  }
+    : `<li class="top__empty">No ratings available yet.</li>`;
 }
 
 $("topList").addEventListener("click", (e) => {
@@ -787,7 +739,6 @@ async function init() {
   $("lightsBtn").addEventListener("click", cycleLights);
 
   loadSaved();
-  state.voter = getVoter();
   setupFilterEvents();
   setupFormEvents();
 
